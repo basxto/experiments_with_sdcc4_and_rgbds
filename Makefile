@@ -12,7 +12,7 @@ RGBFIX := $(RGBDS)rgbfix
 
 SDCC := ./bin/
 CINC := -I include -I $(GBDK)/include
-CC := $(SDCC)sdcc -mgbz80 --asm=rgbds --codeseg ROMX --no-optsdcc-in-asm --no-std-crt0 
+CC := $(SDCC)sdcc -mgbz80 --asm=rgbds --codeseg ROMX --no-std-crt0
 
 g.gb: crt0.o $(SRCS:.c=.o) gsinit_tail.o $(LIBS:.asm=.o)
 	$(RGBLINK) -o $@ -m $(@:.gb=.map) -n $(@:.gb=.sym) $^ && \
@@ -22,4 +22,4 @@ g.gb: crt0.o $(SRCS:.c=.o) gsinit_tail.o $(LIBS:.asm=.o)
 	$(RGBASM) -o $@ $<
 
 %.asm: %.c
-	$(CC) $(CINC) -S -o $@ $<
+	$(CC) $(CINC) --fverbose-asm -S -o $@ $<
